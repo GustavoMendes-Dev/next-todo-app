@@ -26,7 +26,7 @@ const Tasks: React.FC = () => {
   };
 
   return (
-    <section className="w-2/4 mx-auto px-4">
+    <section className="lg:w-2/4 mx-auto px-4">
       <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] mt-10">
         <div className="flex flex-col items-center px-4 py-5 xl:px-6 xl:py-6">
           <div className="flex flex-col w-full gap-5 sm:justify-between xl:flex-row xl:items-center">
@@ -41,7 +41,7 @@ const Tasks: React.FC = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 value={title ?? ""}
                 placeholder="Descreva a tarefa..."
-                className="dark:bg-dark-900 h-11 appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 
+                className="dark:bg-dark-900 w-full lg:w-60 h-11 appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 
                 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 
                 focus:border-indigo-300 focus:outline-hidden focus:ring-1 focus:ring-indigo-500/10
                  dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30
@@ -51,9 +51,9 @@ const Tasks: React.FC = () => {
               <button
                 onClick={handleAddTask}
                 disabled={!title}
-                className="inline-flex items-center gap-2 cursor-pointer  rounded-lg bg-indigo-500 px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-indigo-600"
+                className="inline-flex items-center gap-2 cursor-pointer h-11 rounded-lg bg-indigo-500 px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-indigo-600"
               >
-                Adicionar tarefa
+                <p className="hidden lg:block">Adicionar tarefa</p>
                 <svg
                   className="fill-current"
                   width="20"

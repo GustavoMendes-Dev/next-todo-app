@@ -21,10 +21,10 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onRemove }) => {
         }
       )}
     >
-      <div className="flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-between">
+      <div className="flex flex-row gap-2 items-center justify-between">
         <div
           onClick={() => onToggle(task.id)}
-          className="flex items-center justify-start w-full cursor-pointer"
+          className="flex flex-row items-center justify-start w-full cursor-pointer"
         >
           <input
             type="checkbox"
@@ -35,14 +35,22 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onRemove }) => {
           />
           <div
             className={cn(
-              "flex items-center justify-center w-full h-5 mr-3 border  rounded-md box max-w-5 dark:border-gray-700",
+              "flex flex-row items-center justify-center w-full h-5 mr-3 border  rounded-md box max-w-5 dark:border-gray-700",
               {
                 "border-gray-300": !task.is_complete,
                 "border-indigo-500 bg-indigo-500": task.is_complete,
               }
             )}
           >
-            <span className={task.is_complete ? "opacity-100" : "opacity-0"}>
+            <span
+              className={cn(
+                "flex justify-center items-center text-center w-10 h-10",
+                {
+                  "opacity-100 ": task.is_complete,
+                  "opacity-0": !task.is_complete,
+                }
+              )}
+            >
               <svg
                 width="14"
                 height="14"
@@ -61,9 +69,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onRemove }) => {
             </span>
           </div>
           <span
-            className={cn("text-base select-none dark:text-white", {
-              " line-through text-gray-400 dark:text-white": task.is_complete,
-              "text-gray-900": !task.is_complete,
+            className={cn("text-base break-words", {
+              "line-through text-gray-400 dark:text-white/70": task.is_complete,
+              "text-gray-900 dark:text-white": !task.is_complete,
             })}
           >
             {task.title}

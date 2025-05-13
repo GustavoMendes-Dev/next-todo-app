@@ -20,7 +20,7 @@ const CardList: React.FC = () => {
           />
         ))
       ) : (
-        <p className="text-sm dark:text-white text-gray-900">
+        <p className="text-sm dark:text-white text-gray-900 py-2 text-center">
           Nenhuma tarefa cadastrada.
         </p>
       )}
