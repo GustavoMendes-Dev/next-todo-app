@@ -1,6 +1,7 @@
 import React from "react";
 import cn from "classnames";
 import { Task } from "@/app/types/task";
+import { formatDate } from "@/app/helpers/format-date";
 
 interface TaskCardProps {
   task: Task;
@@ -70,10 +71,10 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onRemove }) => {
         </div>
         <div className="flex flex-col-reverse items-start justify-end w-full gap-3 xl:flex-row xl:items-center xl:gap-5">
           <div className="flex items-center justify-between w-full gap-5 xl:w-auto xl:justify-normal">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 w-40">
               <span
                 className={cn(
-                  "select-none flex items-center gap-1 text-sm cursor-pointer ",
+                  "select-none flex items-center gap-1 text-sm cursor-pointer",
                   {
                     "text-gray-800 dark:text-gray-400": !task.is_complete,
                     "text-gray-400 dark:text-gray-400": task.is_complete,
@@ -95,7 +96,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onRemove }) => {
                     fill=""
                   ></path>
                 </svg>
-                {String(task.created_at)}
+                {formatDate(task.created_at)}
               </span>
             </div>
 
