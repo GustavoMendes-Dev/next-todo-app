@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "./components/layout/header/header";
+import Header from "../components/layout/header/header";
+import { TaskProvider } from "@/context/tasks/task.context";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-gray-50 dark:bg-gray-900">
-        <Header />
-        <main>{children}</main>
+        <TaskProvider>
+          <Header />
+          <main>{children}</main>
+        </TaskProvider>
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "classnames";
-import { Task } from "@/app/types/task";
-import { formatDate } from "@/app/helpers/format-date";
+import { Task } from "@/types/task";
+import { formatDate } from "@/helpers/format-date";
 
 interface TaskCardProps {
   task: Task;
@@ -71,7 +71,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onRemove }) => {
         </div>
         <div className="flex flex-col-reverse items-start justify-end w-full gap-3 xl:flex-row xl:items-center xl:gap-5">
           <div className="flex items-center justify-between w-full gap-5 xl:w-auto xl:justify-normal">
-            <div className="flex items-center gap-3 w-40">
+            <div className="flex items-center gap-3 w-50">
               <span
                 className={cn(
                   "select-none flex items-center gap-1 text-sm cursor-pointer",

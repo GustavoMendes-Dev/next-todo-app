@@ -1,5 +1,5 @@
 "use client";
-import { useLocalStorage } from "@/app/hooks/use-local-storage";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 import { useLayoutEffect } from "react";
 
 export default function ThemeToggleButton() {
