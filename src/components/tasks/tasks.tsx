@@ -4,11 +4,12 @@ import React, { useState } from "react";
 import CardList from "../card-list/card-list";
 import { useTask } from "@/hooks/use-tasks";
 import { v4 as uuidv4 } from "uuid";
+import Filters from "../filter/filters";
 
 const Tasks: React.FC = () => {
   const [title, setTitle] = useState<string | null>(null);
 
-  const { addTask } = useTask();
+  const { addTask, filters, addFilterTask, filterTaskSelected } = useTask();
 
   const handleAddTask = () => {
     if (!title) return;
@@ -29,10 +30,11 @@ const Tasks: React.FC = () => {
       <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] mt-10">
         <div className="flex flex-col items-center px-4 py-5 xl:px-6 xl:py-6">
           <div className="flex flex-col w-full gap-5 sm:justify-between xl:flex-row xl:items-center">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white/90">
-              Tarefas
-            </h2>
-
+            <Filters
+              filterSelected={filterTaskSelected}
+              filters={filters}
+              onFilterSelected={addFilterTask}
+            />
             <div className="flex flex-row gap-4">
               <input
                 type="text"
