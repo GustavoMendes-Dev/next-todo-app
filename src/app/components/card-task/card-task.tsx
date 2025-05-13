@@ -4,24 +4,27 @@ import { Task } from "@/app/types/task";
 
 interface TaskCardProps {
   task: Task;
-  onToggle: (id: number) => void;
+  onToggle: (taskId: number) => void;
+  onRemove: (taskId: number) => void;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onRemove }) => {
   return (
     <div
-      onClick={() => onToggle(task.id)}
       className={cn(
-        "p-5 border cursor-pointer rounded-xl dark:border-gray-800 dark:bg-white/5",
+        "p-5 border rounded-xl dark:border-gray-800 dark:bg-white/5 dark:hover:bg-white/5",
         {
           "bg-gray-50 border-gray-200": task.is_complete,
-          "bg-white border-gray-200 shadow-sm hover:bg-gray-50":
+          "bg-white border-gray-200 shadow-sm dark:hover:bg-gray-800":
             !task.is_complete,
         }
       )}
     >
       <div className="flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-between">
-        <div className="flex items-center justify-start w-full ">
+        <div
+          onClick={() => onToggle(task.id)}
+          className="flex items-center justify-start w-full cursor-pointer"
+        >
           <input
             type="checkbox"
             checked={task.is_complete}
@@ -57,9 +60,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle }) => {
             </span>
           </div>
           <span
-            className={cn("text-base select-none", {
-              " line-through text-gray-400": task.is_complete,
-              "text-gray-800": !task.is_complete,
+            className={cn("text-base select-none dark:text-white", {
+              " line-through text-gray-400 dark:text-white": task.is_complete,
+              "text-gray-900": !task.is_complete,
             })}
           >
             {task.title}
@@ -92,26 +95,33 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle }) => {
                     fill=""
                   ></path>
                 </svg>
-                09 de jan
+                {String(task.created_at)}
               </span>
             </div>
 
-            <span className="flex items-center gap-1 text-sm text-gray-500 cursor-pointer dark:text-gray-400">
+            <button
+              onClick={() => onRemove(task.id)}
+              className="flex h-10 w-full max-w-10 items-center justify-center rounded-lg border border-gray-200
+             text-gray-500 transition-colors hover:bg-gray-100 hover:text-red-700
+              dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 
+              dark:hover:text-red-500 cursor-pointer"
+            >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
+                className="fill-current"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
                 fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                />
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6.54118 3.7915C6.54118 2.54886 7.54854 1.5415 8.79118 1.5415H11.2078C12.4505 1.5415 13.4578 2.54886 13.4578 3.7915V4.0415H15.6249H16.6658C17.08 4.0415 17.4158 4.37729 17.4158 4.7915C17.4158 5.20572 17.08 5.5415 16.6658 5.5415H16.3749V8.24638V13.2464V16.2082C16.3749 17.4508 15.3676 18.4582 14.1249 18.4582H5.87492C4.63228 18.4582 3.62492 17.4508 3.62492 16.2082V13.2464V8.24638V5.5415H3.33325C2.91904 5.5415 2.58325 5.20572 2.58325 4.7915C2.58325 4.37729 2.91904 4.0415 3.33325 4.0415H4.37492H6.54118V3.7915ZM14.8749 13.2464V8.24638V5.5415H13.4578H12.7078H7.29118H6.54118H5.12492V8.24638V13.2464V16.2082C5.12492 16.6224 5.46071 16.9582 5.87492 16.9582H14.1249C14.5391 16.9582 14.8749 16.6224 14.8749 16.2082V13.2464ZM8.04118 4.0415H11.9578V3.7915C11.9578 3.37729 11.6221 3.0415 11.2078 3.0415H8.79118C8.37696 3.0415 8.04118 3.37729 8.04118 3.7915V4.0415ZM8.33325 7.99984C8.74747 7.99984 9.08325 8.33562 9.08325 8.74984V13.7498C9.08325 14.1641 8.74747 14.4998 8.33325 14.4998C7.91904 14.4998 7.58325 14.1641 7.58325 13.7498V8.74984C7.58325 8.33562 7.91904 7.99984 8.33325 7.99984ZM12.4166 8.74984C12.4166 8.33562 12.0808 7.99984 11.6666 7.99984C11.2524 7.99984 10.9166 8.33562 10.9166 8.74984V13.7498C10.9166 14.1641 11.2524 14.4998 11.6666 14.4998C12.0808 14.4998 12.4166 14.1641 12.4166 13.7498V8.74984Z"
+                  fill=""
+                ></path>
               </svg>
-            </span>
+            </button>
           </div>
         </div>
       </div>
