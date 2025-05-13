@@ -3,16 +3,19 @@
 import React, { useState } from "react";
 import CardList from "../card-list/card-list";
 import { useTask } from "@/hooks/use-tasks";
+import { v4 as uuidv4 } from "uuid";
 
 const Tasks: React.FC = () => {
   const [title, setTitle] = useState<string | null>(null);
 
-  const { tasks, addTask } = useTask();
+  const { addTask } = useTask();
 
   const handleAddTask = () => {
     if (!title) return;
+    const id = uuidv4();
+
     const newTask = {
-      id: tasks.length + 1,
+      id: id,
       title: title,
       is_complete: false,
       created_at: new Date(),

@@ -5,15 +5,15 @@ import { formatDate } from "@/helpers/format-date";
 
 interface TaskCardProps {
   task: Task;
-  onToggle: (taskId: number) => void;
-  onRemove: (taskId: number) => void;
+  onToggle: (taskId: string) => void;
+  onRemove: (taskId: string) => void;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onRemove }) => {
   return (
     <div
       className={cn(
-        "p-5 border rounded-xl dark:border-gray-800 dark:bg-white/5 dark:hover:bg-white/5",
+        "py-3 px-5 border rounded-xl dark:border-gray-800 dark:bg-white/5 dark:hover:bg-white/5",
         {
           "bg-gray-50 border-gray-200": task.is_complete,
           "bg-white border-gray-200 shadow-sm dark:hover:bg-gray-800":

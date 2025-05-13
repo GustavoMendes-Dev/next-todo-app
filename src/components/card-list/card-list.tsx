@@ -11,9 +11,9 @@ const CardList: React.FC = () => {
   return (
     <div className="flex flex-col gap-3 p-4 border-t border-gray-200 mt-7 dark:border-gray-800 sm:mt-0 xl:p-6">
       {tasks?.length >= 1 ? (
-        tasks.map((task: Task, index: number) => (
+        tasks.map((task: Task) => (
           <TaskCard
-            key={index}
+            key={task.id}
             task={task}
             onToggle={toggleTask}
             onRemove={removeTask}

@@ -1,12 +1,13 @@
 "use client";
 
-import React, { createContext, useState, ReactNode } from "react";
+import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { Task } from "../../types/task";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 
 export interface TaskContextProps {
   tasks: Task[];
-  removeTask: (taskId: number) => void;
-  toggleTask: (taskId: number) => void;
+  removeTask: (taskId: string) => void;
+  toggleTask: (taskId: string) => void;
   addTask: (newTask: Task) => void;
 }
 
@@ -21,21 +22,31 @@ export const TaskContext = createContext<TaskContextProps | undefined>(
 export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const removeTask = (taskId: number) => {
-    const newTasks = tasks.filter((task: Task) => task.id !== taskId);
-    setTasks(newTasks);
+  const toSavedTasks = JSON.stringify(tasks);
+  const [savedTasks, saveTasks] = useLocalStorage("tasks-list", toSavedTasks);
+
+  useEffect(() => {
+    const tasksParse = JSON.parse(savedTasks as string);
+    setTasks(tasksParse);
+  }, [savedTasks]);
+
+  const removeTask = (taskId: string) => {
+    const newTasksList = tasks.filter((task: Task) => task.id !== taskId);
+    const tasksStringFy = JSON.stringify(newTasksList);
+    saveTasks(tasksStringFy);
   };
 
-  const toggleTask = (taskId: number) => {
-    setTasks((prev: Task[]) =>
-      prev.map((task: Task) =>
-        task.id === taskId ? { ...task, is_complete: !task.is_complete } : task
-      )
+  const toggleTask = (taskId: string) => {
+    const newTasksList = tasks.map((task: Task) =>
+      task.id === taskId ? { ...task, is_complete: !task.is_complete } : task
     );
+    const tasksStringFy = JSON.stringify(newTasksList);
+    saveTasks(tasksStringFy);
   };
 
   const addTask = (newTask: Task) => {
-    setTasks((prevTodos) => [...prevTodos, newTask]);
+    const tasksStringFy = JSON.stringify([...tasks, newTask]);
+    saveTasks(tasksStringFy);
   };
 
   return (
